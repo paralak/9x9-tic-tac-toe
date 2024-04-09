@@ -83,14 +83,23 @@ const TicTacToe = (()=>{
     }
     
     unWaitTurn() {
+      for (let i = 0; i < 3; ++i) for (let j = 0; j < 3; ++j) this.field[i][j].classList.remove('ready');
       if (this.status == this.statuses.inProgressTurn) {
-        for (let i = 0; i < 3; ++i) for (let j = 0; j < 3; ++j) this.field[i][j].classList.remove('ready');
         this.status = this.statuses.inProgress;
       }
     }
 
     update() {
-      
+      if (this.status == this.statuses.inProgressTurn)
+        winPatterns.forEach((item)=>{
+          if (this.field[+item[0]][+item[1]].innerText + this.field[+item[2]][+item[3]].innerText + this.field[+item[4]][+item[5]].innerText == "XXX") this.status = this.statuses.winX;
+          if (this.field[+item[0]][+item[1]].innerText + this.field[+item[2]][+item[3]].innerText + this.field[+item[4]][+item[5]].innerText == "OOO") this.status = this.statuses.winO;
+        });
+        if (this.status == this.statuses.inProgressTurn) {
+          let l = "";
+          for (let i = 0; i < 3; ++i) for (let j = 0; j < 3; ++j) l += this.field[i][j].innerText;
+          if (l.length == 9) this.status = this.statuses.tie;
+        }
     }
   };
 
@@ -98,7 +107,7 @@ const TicTacToe = (()=>{
   TicTacToe.prototype.statuses = {
     inProgress:0,
     winX:1,
-    winY:2,
+    winO:2,
     tie:3,
     inProgressTurn:4,
   }
