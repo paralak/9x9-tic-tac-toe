@@ -69,6 +69,7 @@ const TicTacToe9x9 = (()=>{
         this.field[i][j].turn_callback = turn;
         this.field[i][j].waitTurn(this.turn);
       }
+      this.turn = this.turn == "X" ? "O" : "X";
     }
 
     update() {
